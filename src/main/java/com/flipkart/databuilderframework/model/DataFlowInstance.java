@@ -1,9 +1,9 @@
 package com.flipkart.databuilderframework.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.validator.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * A instance of the {@link com.flipkart.databuilderframework.model.DataFlow} object to be used for execution.
