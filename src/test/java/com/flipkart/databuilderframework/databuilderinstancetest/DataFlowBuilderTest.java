@@ -3,8 +3,8 @@ package com.flipkart.databuilderframework.databuilderinstancetest;
 import com.flipkart.databuilderframework.annotations.DataBuilderClassInfo;
 import com.flipkart.databuilderframework.engine.*;
 import com.flipkart.databuilderframework.model.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class DataFlowBuilderTest {
 
@@ -68,7 +68,7 @@ public class DataFlowBuilderTest {
                                                       new DataDelta(
                                                           new TestDataA("Hello"),
                                                           new TestDataB("Santanu")));
-        Assert.assertTrue(response.getResponses().containsKey(Utils.name(TestDataC.class)));
+        Assertions.assertTrue(response.getResponses().containsKey(Utils.name(TestDataC.class)));
     }
 
 }

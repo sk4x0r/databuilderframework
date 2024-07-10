@@ -5,13 +5,13 @@ import com.flipkart.databuilderframework.engine.impl.InstantiatingDataBuilderFac
 import com.flipkart.databuilderframework.model.*;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.fail;
+
 
 @Slf4j
 public class DataExecutionListenerContextTest {
@@ -31,8 +31,8 @@ public class DataExecutionListenerContextTest {
         						  DataFlowInstance dataFlowInstance,
                                   DataBuilderMeta builderToBeApplied,
                                   DataDelta dataDelta, Map<String, Data> prevResponses) throws Exception {
-        	Assert.assertNotNull(builderContext);
-        	Assert.assertEquals(builderContext.getContextData(KEY, String.class), VALUE);
+        	Assertions.assertNotNull(builderContext);
+        	Assertions.assertEquals(builderContext.getContextData(KEY, String.class), VALUE);
         }
 
         @Override
@@ -40,8 +40,8 @@ public class DataExecutionListenerContextTest {
         						 DataFlowInstance dataFlowInstance,
                                  DataBuilderMeta builderToBeApplied,
                                  DataDelta dataDelta, Map<String, Data> prevResponses, Data currentResponse) throws Exception {
-        	Assert.assertNotNull(builderContext);
-        	Assert.assertEquals(builderContext.getContextData(KEY, String.class), VALUE);
+        	Assertions.assertNotNull(builderContext);
+        	Assertions.assertEquals(builderContext.getContextData(KEY, String.class), VALUE);
         }
 
         @Override
@@ -50,8 +50,8 @@ public class DataExecutionListenerContextTest {
                                    DataBuilderMeta builderToBeApplied,
                                    DataDelta dataDelta,
                                    Map<String, Data> prevResponses, Throwable frameworkException) throws Exception {
-        	Assert.assertNotNull(builderContext);
-        	Assert.assertEquals(builderContext.getContextData(KEY, String.class), VALUE);
+        	Assertions.assertNotNull(builderContext);
+        	Assertions.assertEquals(builderContext.getContextData(KEY, String.class), VALUE);
         }
 
 
@@ -67,7 +67,7 @@ public class DataExecutionListenerContextTest {
     private DataFlowExecutor executor = new SimpleDataFlowExecutor(new InstantiatingDataBuilderFactory(dataBuilderMetadataManager));
     private DataFlow dataFlow = new DataFlow();
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         dataFlow = new DataFlowBuilder()
                 .withAnnotatedDataBuilder(TestBuilderA.class)
@@ -92,10 +92,10 @@ public class DataExecutionListenerContextTest {
                                             new TestDataA("Hello"), new TestDataB("World"),
                                             new TestDataD("this"), new TestDataG("Hmmm")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertEquals(3, response.getResponses().size());
-            Assert.assertTrue(response.getResponses().containsKey("C"));
-            Assert.assertTrue(response.getResponses().containsKey("E"));
-            Assert.assertTrue(response.getResponses().containsKey("F"));
+            Assertions.assertEquals(3, response.getResponses().size());
+            Assertions.assertTrue(response.getResponses().containsKey("C"));
+            Assertions.assertTrue(response.getResponses().containsKey("E"));
+            Assertions.assertTrue(response.getResponses().containsKey("F"));
         }
     }
 

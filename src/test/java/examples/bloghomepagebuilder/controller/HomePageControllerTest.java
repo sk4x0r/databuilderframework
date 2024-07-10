@@ -7,8 +7,8 @@ import examples.bloghomepagebuilder.builders.*;
 import examples.bloghomepagebuilder.data.HomePageRequest;
 import examples.bloghomepagebuilder.data.HomePageResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -48,7 +48,7 @@ public class HomePageControllerTest {
         Stopwatch stopwatch = Stopwatch.createStarted();
         for(long i = 0; i < 100000; i++) {
             HomePageResponse response = executor.run(homePageDataFlow, request).get(HomePageResponse.class);
-            Assert.assertNotNull(response);
+            Assertions.assertNotNull(response);
             //System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(response));
         }
         log.info("Time taken: {}", stopwatch.elapsed(TimeUnit.MILLISECONDS));

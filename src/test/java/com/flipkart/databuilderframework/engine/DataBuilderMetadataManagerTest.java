@@ -2,16 +2,16 @@ package com.flipkart.databuilderframework.engine;
 
 import com.flipkart.databuilderframework.complextest.SB;
 import com.google.common.collect.ImmutableSet;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class DataBuilderMetadataManagerTest {
 
     @Test
     public void testGetConsumesSetFor() throws Exception {
         DataBuilderMetadataManager manager = new DataBuilderMetadataManager();
-        Assert.assertEquals(null, manager.getConsumesSetFor("A"));
+        Assertions.assertEquals(null, manager.getConsumesSetFor("A"));
         manager.register(ImmutableSet.of("CR", "CAID", "VAS"), "OO", "SB", SB.class);
-        Assert.assertEquals(1, manager.getConsumesSetFor("CR").size());
+        Assertions.assertEquals(1, manager.getConsumesSetFor("CR").size());
     }
 }

@@ -3,9 +3,9 @@ package com.flipkart.databuilderframework.cmplxscenariotest;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.flipkart.databuilderframework.cmplxscenariotest.builders.BuilderA1;
 import com.flipkart.databuilderframework.cmplxscenariotest.builders.BuilderA2;
@@ -53,7 +53,7 @@ public class TestBuilderOfSameRankNotBreakingInBetween {
 	private final ExecutorService builderExecutor  = Executors.newFixedThreadPool(200);
 	private final MultiThreadedDataFlowExecutor me =  new MultiThreadedDataFlowExecutor(new InstantiatingDataBuilderFactory(dataBuilderMetadataManager),builderExecutor);;
 
-	@Before
+	@BeforeEach
 	public void setup() throws Exception {
 		dataBuilderMetadataManager.register(BuilderA1.class);
 		dataBuilderMetadataManager.register(BuilderA2.class);
@@ -95,10 +95,10 @@ public class TestBuilderOfSameRankNotBreakingInBetween {
 		final DataFlow dataflowRef = dataflow;
 		final DataFlowInstance instance  = new DataFlowInstance("test", dataflowRef);
 		DataExecutionResponse resp = se.run(instance, new DataA(8), new InputAData());
-		Assert.assertEquals(true,resp.getResponses().containsKey("K"));
+		Assertions.assertEquals(true,resp.getResponses().containsKey("K"));
 		
 		final DataFlowInstance meInstance  = new DataFlowInstance("test2", dataflowRef);
 		DataExecutionResponse resp2 = me.run(instance, new DataA(8), new InputAData());
-		Assert.assertEquals(true,resp2.getResponses().containsKey("K"));
+		Assertions.assertEquals(true,resp2.getResponses().containsKey("K"));
 	}
 }

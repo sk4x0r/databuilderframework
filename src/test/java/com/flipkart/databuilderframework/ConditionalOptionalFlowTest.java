@@ -8,9 +8,9 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ConditionalOptionalFlowTest {
 	private DataBuilderMetadataManager dataBuilderMetadataManager = new DataBuilderMetadataManager();
@@ -46,7 +46,7 @@ public class ConditionalOptionalFlowTest {
 		}
 	}
 
-	@Before
+	@BeforeEach
 	public void setup() throws Exception {
 		dataBuilderMetadataManager.register(ImmutableSet.of("A", "B"), "C", "BuilderA", TestBuilderA.class ); //concats A and B values
 		dataBuilderMetadataManager.registerWithOptionals(ImmutableSet.of("C", "D"),ImmutableSet.of("G"), "E", "BuilderB", ConditionalBuilder.class );
@@ -72,26 +72,26 @@ public class ConditionalOptionalFlowTest {
 		{
 			DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataA("Hello"), new TestDataB("World"), new TestDataD("notThis")));
 			DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-			Assert.assertTrue(response.getResponses().containsKey("C"));
-			Assert.assertFalse(response.getResponses().containsKey("E"));
+			Assertions.assertTrue(response.getResponses().containsKey("C"));
+			Assertions.assertFalse(response.getResponses().containsKey("E"));
 		}
 		{
 			DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataG("notThis")));
 			DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-			Assert.assertFalse(response.getResponses().containsKey("E"));
-			Assert.assertFalse(response.getResponses().containsKey("C"));
+			Assertions.assertFalse(response.getResponses().containsKey("E"));
+			Assertions.assertFalse(response.getResponses().containsKey("C"));
 		}
 		{
 			DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataG("this")));
 			DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-			Assert.assertTrue(response.getResponses().containsKey("E"));
-			Assert.assertTrue(response.getResponses().containsKey("F"));
+			Assertions.assertTrue(response.getResponses().containsKey("E"));
+			Assertions.assertTrue(response.getResponses().containsKey("F"));
 		}
 		{
 			DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataD("this")));
 			DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-			Assert.assertTrue(response.getResponses().containsKey("E"));
-			Assert.assertTrue(response.getResponses().containsKey("F"));
+			Assertions.assertTrue(response.getResponses().containsKey("E"));
+			Assertions.assertTrue(response.getResponses().containsKey("F"));
 		}
 
 	}

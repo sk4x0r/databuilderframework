@@ -7,9 +7,9 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Executors;
 
@@ -26,7 +26,7 @@ public class ConcurrencyTest {
                                                 new InstantiatingDataBuilderFactory(dataBuilderMetadataManager));
     private ExecutionGraphGenerator executionGraphGenerator = new ExecutionGraphGenerator(dataBuilderMetadataManager);
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         dataBuilderMetadataManager.register(ImmutableSet.of("REQ"), "A", "BuilderA", ServiceCallerA.class );
         dataBuilderMetadataManager.register(ImmutableSet.of("REQ"), "B", "BuilderB", ServiceCallerB.class );
@@ -52,8 +52,8 @@ public class ConcurrencyTest {
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new RequestData()));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertEquals(8, response.getResponses().size());
-            Assert.assertTrue(response.getResponses().containsKey("RES"));
+            Assertions.assertEquals(8, response.getResponses().size());
+            Assertions.assertTrue(response.getResponses().containsKey("RES"));
         }
         log.info("{}", System.currentTimeMillis() - startTime);
 
@@ -74,7 +74,7 @@ public class ConcurrencyTest {
             long startTime = System.currentTimeMillis();
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
             mTime += (System.currentTimeMillis() - startTime);
-            Assert.assertEquals(8, response.getResponses().size());
+            Assertions.assertEquals(8, response.getResponses().size());
             //System.out.println("MT:" + System.currentTimeMillis());
         }
         long sTime = 0;
@@ -86,7 +86,7 @@ public class ConcurrencyTest {
             long startTime = System.currentTimeMillis();
             DataExecutionResponse response = simpleExecutor.run(dataFlowInstance, dataDelta);
             sTime += (System.currentTimeMillis() - startTime);
-            Assert.assertEquals(8, response.getResponses().size());
+            Assertions.assertEquals(8, response.getResponses().size());
             //System.out.println("ST:" + System.currentTimeMillis());
         }
         
@@ -99,7 +99,7 @@ public class ConcurrencyTest {
             long startTime = System.currentTimeMillis();
             DataExecutionResponse response = optimizedMultiThreadedExecutor.run(dataFlowInstance, dataDelta);
             omTime += (System.currentTimeMillis() - startTime);
-            Assert.assertEquals(8, response.getResponses().size());
+            Assertions.assertEquals(8, response.getResponses().size());
             //System.out.println("MT:" + System.currentTimeMillis());
         }
         log.info("OMT: {} MT: {} ST: {}",omTime, mTime, sTime);

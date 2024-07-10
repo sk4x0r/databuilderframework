@@ -1,10 +1,10 @@
 package com.flipkart.databuilderframework;
 
 import com.flipkart.databuilderframework.engine.DataBuilderContext;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.fail;
+
 
 public class TestContextGetSet {
     private static final class TestClass {
@@ -59,13 +59,13 @@ public class TestContextGetSet {
         TestClass testClass1 = new TestClass("Santanu", 30);
         context.saveContextData("TEST", testClass1);
         TestClass testClass2 = context.getContextData("TEST", TestClass.class);
-        Assert.assertEquals(testClass1, testClass2);
+        Assertions.assertEquals(testClass1, testClass2);
     }
 
     @Test
     public void testContextNotFound() {
         TestClass testClass = new DataBuilderContext().getContextData("TEST", TestClass.class);
-        Assert.assertNull(testClass);
+        Assertions.assertNull(testClass);
     }
 
     @Test
@@ -73,9 +73,9 @@ public class TestContextGetSet {
         try {
             new DataBuilderContext().saveContextData(null, new TestClass("XX", 1));
         } catch (RuntimeException e) {
-            Assert.assertEquals("Invalid key for context data. Key cannot be null/empty", e.getMessage());
+            Assertions.assertEquals("Invalid key for context data. Key cannot be null/empty", e.getMessage());
             return;
         }
-        fail("Expected exception was not raised");
+        Assertions.fail("Expected exception was not raised");
     }
 }

@@ -5,9 +5,9 @@ import com.flipkart.databuilderframework.engine.impl.InstantiatingDataBuilderFac
 import com.flipkart.databuilderframework.model.*;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ConditionalFlowTest {
     private DataBuilderMetadataManager dataBuilderMetadataManager = new DataBuilderMetadataManager();
@@ -31,7 +31,7 @@ public class ConditionalFlowTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         dataBuilderMetadataManager.register(ImmutableSet.of("A", "B"), "C", "BuilderA", TestBuilderA.class );
         dataBuilderMetadataManager.register(ImmutableSet.of("C", "D"), "E", "BuilderB", ConditionalBuilder.class );
@@ -57,18 +57,18 @@ public class ConditionalFlowTest {
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataA("Hello")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertTrue(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().isEmpty());
         }
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataB("Bhai")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("C"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("C"));
         }
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataD("this")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertTrue(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().isEmpty());
         }
 
     }
@@ -81,20 +81,20 @@ public class ConditionalFlowTest {
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataA("Hello")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertTrue(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().isEmpty());
         }
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataB("World")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("C"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("C"));
         }
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataD("this")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("E"));
-            Assert.assertTrue(response.getResponses().containsKey("F"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("E"));
+            Assertions.assertTrue(response.getResponses().containsKey("F"));
         }
 
     }

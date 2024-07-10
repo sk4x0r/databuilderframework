@@ -4,9 +4,9 @@ import com.flipkart.databuilderframework.engine.*;
 import com.flipkart.databuilderframework.engine.impl.InstantiatingDataBuilderFactory;
 import com.flipkart.databuilderframework.model.*;
 import com.google.common.collect.Lists;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,7 +21,7 @@ public class PerfWithAccessesTest {
     private DataFlow dataFlow = new DataFlow();
     private DataFlow dataFlowWithAccesses = new DataFlow();
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         dataFlow = new DataFlowBuilder()
                 .withAnnotatedDataBuilder(TestBuilderWithoutAccesses.class)
@@ -44,7 +44,7 @@ public class PerfWithAccessesTest {
             long startTime = System.currentTimeMillis();
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
             simpleTime += (System.currentTimeMillis() - startTime);
-            Assert.assertEquals(1, response.getResponses().size());
+            Assertions.assertEquals(1, response.getResponses().size());
         }
         long accessTime = 0;
         for (int i = 0; i < 10000; i++) {
@@ -55,7 +55,7 @@ public class PerfWithAccessesTest {
             long startTime = System.currentTimeMillis();
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
             accessTime += (System.currentTimeMillis() - startTime);
-            Assert.assertEquals(1, response.getResponses().size());
+            Assertions.assertEquals(1, response.getResponses().size());
         }
         long simpleAccessTime = 0;
         for (int i = 0; i < 10000; i++) {
@@ -66,7 +66,7 @@ public class PerfWithAccessesTest {
             long startTime = System.currentTimeMillis();
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
             simpleAccessTime += (System.currentTimeMillis() - startTime);
-            Assert.assertEquals(1, response.getResponses().size());
+            Assertions.assertEquals(1, response.getResponses().size());
         }
 
         System.out.println(String.format("Time without Accesses :%d Time with Accesses :%d Time with accesses w/o data :%d "

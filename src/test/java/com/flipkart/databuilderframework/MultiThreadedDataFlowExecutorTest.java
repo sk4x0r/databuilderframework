@@ -5,14 +5,14 @@ import com.flipkart.databuilderframework.engine.impl.InstantiatingDataBuilderFac
 import com.flipkart.databuilderframework.model.*;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.concurrent.Executors;
 
-import static org.junit.Assert.fail;
+
 
 @Slf4j
 public class MultiThreadedDataFlowExecutorTest {
@@ -183,7 +183,7 @@ public class MultiThreadedDataFlowExecutorTest {
     private DataFlow dataFlowValidationError = new DataFlow();
     private DataFlow dataFlowValidationErrorWithPartialData = new DataFlow();
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         dataFlow = new DataFlowBuilder()
                 .withAnnotatedDataBuilder(TestBuilderA.class)
@@ -230,20 +230,20 @@ public class MultiThreadedDataFlowExecutorTest {
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataA("Hello")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertTrue(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().isEmpty());
         }
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataB("World")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("C"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("C"));
         }
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataD("this")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("E"));
-            Assert.assertTrue(response.getResponses().containsKey("F"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("E"));
+            Assertions.assertTrue(response.getResponses().containsKey("F"));
         }
     }
 
@@ -255,15 +255,15 @@ public class MultiThreadedDataFlowExecutorTest {
         {
             DataDelta dataDelta = new DataDelta(Lists.newArrayList(new TestDataA("Hello"), new TestDataB("World")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("C"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("C"));
         }
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataD("this")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("E"));
-            Assert.assertTrue(response.getResponses().containsKey("F"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("E"));
+            Assertions.assertTrue(response.getResponses().containsKey("F"));
         }
     }
     @Test
@@ -276,10 +276,10 @@ public class MultiThreadedDataFlowExecutorTest {
                                             new TestDataA("Hello"), new TestDataB("World"),
                                             new TestDataD("this"), new TestDataG("Hmmm")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertEquals(3, response.getResponses().size());
-            Assert.assertTrue(response.getResponses().containsKey("C"));
-            Assert.assertTrue(response.getResponses().containsKey("E"));
-            Assert.assertTrue(response.getResponses().containsKey("F"));
+            Assertions.assertEquals(3, response.getResponses().size());
+            Assertions.assertTrue(response.getResponses().containsKey("C"));
+            Assertions.assertTrue(response.getResponses().containsKey("E"));
+            Assertions.assertTrue(response.getResponses().containsKey("F"));
         }
     }
 
@@ -293,10 +293,10 @@ public class MultiThreadedDataFlowExecutorTest {
             try {
                 executor.run(dataFlowInstance, dataDelta);
             } catch (Exception e) {
-                Assert.assertEquals("TestError", e.getCause().getMessage());
+                Assertions.assertEquals("TestError", e.getCause().getMessage());
                 return;
             }
-            fail("Should have thrown exception");
+            Assertions.fail("Should have thrown exception");
         }
     }
 
@@ -312,7 +312,7 @@ public class MultiThreadedDataFlowExecutorTest {
             } catch (Exception e) {
                 return;
             }
-            fail("Should have thrown exception");
+            Assertions.fail("Should have thrown exception");
         }
     }
 
@@ -326,10 +326,10 @@ public class MultiThreadedDataFlowExecutorTest {
             try {
                 executor.run(dataFlowInstance, dataDelta);
             } catch (Exception e) {
-                Assert.assertEquals("DataValidationError", e.getCause().getMessage());
+                Assertions.assertEquals("DataValidationError", e.getCause().getMessage());
                 return;
             }
-            fail("Should have thrown exception");
+            Assertions.fail("Should have thrown exception");
         }
     }
 
@@ -345,10 +345,10 @@ public class MultiThreadedDataFlowExecutorTest {
                 response = executor.run(dataFlowInstance, dataDelta);
             } catch (DataValidationException e) {
                 DataExecutionResponse dataExecutionResponse = e.getResponse();
-                Assert.assertTrue(dataExecutionResponse.getResponses().containsKey("C"));
+                Assertions.assertTrue(dataExecutionResponse.getResponses().containsKey("C"));
                 return;
             }
-            fail("Should have thrown exception");
+            Assertions.fail("Should have thrown exception");
         }
     }
 }

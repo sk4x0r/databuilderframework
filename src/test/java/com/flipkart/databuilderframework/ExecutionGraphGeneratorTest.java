@@ -9,20 +9,20 @@ import com.flipkart.databuilderframework.model.DataFlow;
 import com.flipkart.databuilderframework.model.ExecutionGraph;
 import com.google.common.collect.ImmutableSet;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
-import static org.junit.Assert.fail;
+
 
 @Slf4j
 public class ExecutionGraphGeneratorTest {
     private DataBuilderMetadataManager dataBuilderMetadataManager = new DataBuilderMetadataManager();
     private ExecutionGraphGenerator executionGraphGenerator = new ExecutionGraphGenerator(dataBuilderMetadataManager);
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         dataBuilderMetadataManager.register(ImmutableSet.of("A", "B"), "C", "BuilderA", TestBuilderA.class );
         dataBuilderMetadataManager.register(ImmutableSet.of("C", "D"), "E", "BuilderB", TestBuilderB.class );
@@ -44,7 +44,7 @@ public class ExecutionGraphGeneratorTest {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-            fail("Unexpected error");
+            Assertions.fail("Unexpected error");
         }
     }
 
@@ -62,7 +62,7 @@ public class ExecutionGraphGeneratorTest {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-            fail("Unexpected error");
+            Assertions.fail("Unexpected error");
         }
     }
 
@@ -74,7 +74,7 @@ public class ExecutionGraphGeneratorTest {
                 .withTargetData("X")
                 .build();
         ExecutionGraph e = dataFlow.getExecutionGraph();
-        Assert.assertTrue(e.getDependencyHierarchy().isEmpty());
+        Assertions.assertTrue(e.getDependencyHierarchy().isEmpty());
     }
 
     @Test
@@ -85,9 +85,9 @@ public class ExecutionGraphGeneratorTest {
                 .withTargetData("C")
                 .build();
         ExecutionGraph e = dataFlow.getExecutionGraph();
-        Assert.assertFalse(e.getDependencyHierarchy().isEmpty());
-        Assert.assertEquals(1, e.getDependencyHierarchy().size());
-        Assert.assertEquals("BuilderA", e.getDependencyHierarchy().get(0).get(0).getName());
+        Assertions.assertFalse(e.getDependencyHierarchy().isEmpty());
+        Assertions.assertEquals(1, e.getDependencyHierarchy().size());
+        Assertions.assertEquals("BuilderA", e.getDependencyHierarchy().get(0).get(0).getName());
     }
 
     @Test
@@ -98,12 +98,12 @@ public class ExecutionGraphGeneratorTest {
                 .withTargetData("E")
                 .build();
         ExecutionGraph e = dataFlow.getExecutionGraph();
-        Assert.assertFalse(e.getDependencyHierarchy().isEmpty());
-        Assert.assertEquals(2, e.getDependencyHierarchy().size());
-        Assert.assertEquals("BuilderA", e.getDependencyHierarchy().get(0).get(0).getName());
-        Assert.assertEquals(1, e.getDependencyHierarchy().get(0).size());
-        Assert.assertEquals("BuilderB", e.getDependencyHierarchy().get(1).get(0).getName());
-        Assert.assertEquals(1, e.getDependencyHierarchy().get(1).size());
+        Assertions.assertFalse(e.getDependencyHierarchy().isEmpty());
+        Assertions.assertEquals(2, e.getDependencyHierarchy().size());
+        Assertions.assertEquals("BuilderA", e.getDependencyHierarchy().get(0).get(0).getName());
+        Assertions.assertEquals(1, e.getDependencyHierarchy().get(0).size());
+        Assertions.assertEquals("BuilderB", e.getDependencyHierarchy().get(1).get(0).getName());
+        Assertions.assertEquals(1, e.getDependencyHierarchy().get(1).size());
     }
 
     @Test
@@ -114,13 +114,13 @@ public class ExecutionGraphGeneratorTest {
                 .withTargetData("F")
                 .build();
         ExecutionGraph e = dataFlow.getExecutionGraph();
-        Assert.assertEquals(3, e.getDependencyHierarchy().size());
-        Assert.assertEquals("BuilderA", e.getDependencyHierarchy().get(0).get(0).getName());
-        Assert.assertEquals(1, e.getDependencyHierarchy().get(0).size());
-        Assert.assertEquals("BuilderB", e.getDependencyHierarchy().get(1).get(0).getName());
-        Assert.assertEquals(1, e.getDependencyHierarchy().get(1).size());
-        Assert.assertEquals("BuilderC", e.getDependencyHierarchy().get(2).get(0).getName());
-        Assert.assertEquals(1, e.getDependencyHierarchy().get(2).size());
+        Assertions.assertEquals(3, e.getDependencyHierarchy().size());
+        Assertions.assertEquals("BuilderA", e.getDependencyHierarchy().get(0).get(0).getName());
+        Assertions.assertEquals(1, e.getDependencyHierarchy().get(0).size());
+        Assertions.assertEquals("BuilderB", e.getDependencyHierarchy().get(1).get(0).getName());
+        Assertions.assertEquals(1, e.getDependencyHierarchy().get(1).size());
+        Assertions.assertEquals("BuilderC", e.getDependencyHierarchy().get(2).get(0).getName());
+        Assertions.assertEquals(1, e.getDependencyHierarchy().get(2).size());
     }
 
     @Test
@@ -136,7 +136,7 @@ public class ExecutionGraphGeneratorTest {
                 return;
             }
         }
-        fail("A conflict should have come here");
+        Assertions.fail("A conflict should have come here");
     }
 
     @Test
@@ -152,7 +152,7 @@ public class ExecutionGraphGeneratorTest {
                 return;
             }
         }
-        fail("A conflict should have come here");
+        Assertions.fail("A conflict should have come here");
     }
     @Test
     public void testGenerateInterdependentStepWithResolution() throws Exception  {
@@ -163,13 +163,13 @@ public class ExecutionGraphGeneratorTest {
                 .withResolutionSpec("G", "BuilderE")
                 .build();
         ExecutionGraph e = dataFlow.getExecutionGraph();
-        Assert.assertEquals(3, e.getDependencyHierarchy().size());
-        Assert.assertEquals("BuilderA", e.getDependencyHierarchy().get(0).get(0).getName());
-        Assert.assertEquals(1, e.getDependencyHierarchy().get(0).size());
-        Assert.assertEquals("BuilderB", e.getDependencyHierarchy().get(1).get(0).getName());
-        Assert.assertEquals(1, e.getDependencyHierarchy().get(1).size());
-        Assert.assertEquals("BuilderE", e.getDependencyHierarchy().get(2).get(0).getName());
-        Assert.assertEquals(1, e.getDependencyHierarchy().get(2).size());
+        Assertions.assertEquals(3, e.getDependencyHierarchy().size());
+        Assertions.assertEquals("BuilderA", e.getDependencyHierarchy().get(0).get(0).getName());
+        Assertions.assertEquals(1, e.getDependencyHierarchy().get(0).size());
+        Assertions.assertEquals("BuilderB", e.getDependencyHierarchy().get(1).get(0).getName());
+        Assertions.assertEquals(1, e.getDependencyHierarchy().get(1).size());
+        Assertions.assertEquals("BuilderE", e.getDependencyHierarchy().get(2).get(0).getName());
+        Assertions.assertEquals(1, e.getDependencyHierarchy().get(2).size());
 
     }
     @Test
@@ -182,14 +182,14 @@ public class ExecutionGraphGeneratorTest {
                                     .build();
         ExecutionGraph e = dataFlow.getExecutionGraph();
         log.info("{}", new ObjectMapper().writeValueAsString(e));
-        Assert.assertEquals(4, e.getDependencyHierarchy().size());
-        Assert.assertEquals("BuilderA", e.getDependencyHierarchy().get(0).get(0).getName());
-        Assert.assertEquals(1, e.getDependencyHierarchy().get(0).size());
-        Assert.assertEquals("BuilderB", e.getDependencyHierarchy().get(1).get(0).getName());
-        Assert.assertEquals(1, e.getDependencyHierarchy().get(1).size());
-        Assert.assertEquals("BuilderC", e.getDependencyHierarchy().get(2).get(0).getName());
-        Assert.assertEquals(1, e.getDependencyHierarchy().get(2).size());
-        Assert.assertEquals("BuilderD", e.getDependencyHierarchy().get(3).get(0).getName());
+        Assertions.assertEquals(4, e.getDependencyHierarchy().size());
+        Assertions.assertEquals("BuilderA", e.getDependencyHierarchy().get(0).get(0).getName());
+        Assertions.assertEquals(1, e.getDependencyHierarchy().get(0).size());
+        Assertions.assertEquals("BuilderB", e.getDependencyHierarchy().get(1).get(0).getName());
+        Assertions.assertEquals(1, e.getDependencyHierarchy().get(1).size());
+        Assertions.assertEquals("BuilderC", e.getDependencyHierarchy().get(2).get(0).getName());
+        Assertions.assertEquals(1, e.getDependencyHierarchy().get(2).size());
+        Assertions.assertEquals("BuilderD", e.getDependencyHierarchy().get(3).get(0).getName());
 
     }
 

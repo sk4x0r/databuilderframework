@@ -40,16 +40,16 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class ContextSwitchOverHeadTest {
 	private final DataBuilderMetadataManager dataBuilderMetadataManager = new DataBuilderMetadataManager();
 	private  DataFlow dataflow = new DataFlow();
 	
-	@Before
+	@BeforeEach
 	public void setup() throws Exception {
 		dataBuilderMetadataManager.register(BuilderA1.class);
 		dataBuilderMetadataManager.register(BuilderA2.class);
@@ -121,7 +121,7 @@ public class ContextSwitchOverHeadTest {
 					try {
 						final DataFlowInstance instance  = new DataFlowInstance("test", dataflowRef);
 						DataExecutionResponse resp = se.run(instance, new DataA(), new InputAData());
-						Assert.assertEquals(true,resp.getResponses().containsKey("K"));
+						Assertions.assertEquals(true,resp.getResponses().containsKey("K"));
 					} catch (DataBuilderFrameworkException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -148,7 +148,7 @@ public class ContextSwitchOverHeadTest {
 					try {
 						final DataFlowInstance instance  = new DataFlowInstance("test", dataflowRef);
 						DataExecutionResponse resp = me.run(instance, new DataA(), new InputAData());
-						Assert.assertEquals(true,resp.getResponses().containsKey("K"));
+						Assertions.assertEquals(true,resp.getResponses().containsKey("K"));
 						//						System.out.println(resp.getResponses().keySet());
 						//						System.out.println(iRef);
 					} catch (DataBuilderFrameworkException e) {
@@ -180,7 +180,7 @@ public class ContextSwitchOverHeadTest {
 					try {
 						final DataFlowInstance instance  = new DataFlowInstance("test", dataflowRef);
 						DataExecutionResponse resp = ome.run(instance, new DataA(), new InputAData());
-						Assert.assertEquals(true,resp.getResponses().containsKey("K"));
+						Assertions.assertEquals(true,resp.getResponses().containsKey("K"));
 					} catch (DataBuilderFrameworkException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

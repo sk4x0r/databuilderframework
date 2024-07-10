@@ -6,13 +6,13 @@ import com.flipkart.databuilderframework.model.*;
 import com.google.common.collect.Lists;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.fail;
+
 
 @Slf4j
 public class DataFlowWithOptionalExecutorTest {
@@ -186,7 +186,7 @@ public class DataFlowWithOptionalExecutorTest {
     private DataFlowExecutor executor = new SimpleDataFlowExecutor(new InstantiatingDataBuilderFactory(dataBuilderMetadataManager));
     private DataFlow dataFlow = new DataFlow();
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         dataFlow = new DataFlowBuilder()
                 .withAnnotatedDataBuilder(TestBuilderOptional.class)
@@ -205,21 +205,21 @@ public class DataFlowWithOptionalExecutorTest {
         {
             DataDelta dataDelta = new DataDelta(new TestDataB("World"));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertTrue(response.getResponses().isEmpty());
-            Assert.assertFalse(response.getResponses().containsKey("C"));
+            Assertions.assertTrue(response.getResponses().isEmpty());
+            Assertions.assertFalse(response.getResponses().containsKey("C"));
         }
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataA("Hello World")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("C"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("C"));
         }
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataD("this")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("E"));
-            Assert.assertTrue(response.getResponses().containsKey("F"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("E"));
+            Assertions.assertTrue(response.getResponses().containsKey("F"));
         }
     }
 
@@ -232,21 +232,21 @@ public class DataFlowWithOptionalExecutorTest {
         {
             DataDelta dataDelta = new DataDelta(new TestDataA("Hello"));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertTrue(response.getResponses().isEmpty());
-            Assert.assertFalse(response.getResponses().containsKey("C"));
+            Assertions.assertTrue(response.getResponses().isEmpty());
+            Assertions.assertFalse(response.getResponses().containsKey("C"));
         }
         {
             DataDelta dataDelta = new DataDelta(new TestDataB("World"));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("C"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("C"));
         }
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataD("this")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("E"));
-            Assert.assertTrue(response.getResponses().containsKey("F"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("E"));
+            Assertions.assertTrue(response.getResponses().containsKey("F"));
         }
     }
     @Test
@@ -257,21 +257,21 @@ public class DataFlowWithOptionalExecutorTest {
         {
             DataDelta dataDelta = new DataDelta(new TestDataB("World"));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertTrue(response.getResponses().isEmpty());
-            Assert.assertFalse(response.getResponses().containsKey("C"));
+            Assertions.assertTrue(response.getResponses().isEmpty());
+            Assertions.assertFalse(response.getResponses().containsKey("C"));
         }
         {
             DataDelta dataDelta = new DataDelta(new TestDataA("Hello"));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("C"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("C"));
         }
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataD("this")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("E"));
-            Assert.assertTrue(response.getResponses().containsKey("F"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("E"));
+            Assertions.assertTrue(response.getResponses().containsKey("F"));
         }
     }
 

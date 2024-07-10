@@ -1,14 +1,18 @@
 package com.flipkart.databuilderframework;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import com.flipkart.databuilderframework.engine.*;
 import com.flipkart.databuilderframework.engine.impl.InstantiatingDataBuilderFactory;
 import com.flipkart.databuilderframework.model.*;
 import com.google.common.collect.Lists;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class DataFlowWithAccessesExecutorTest {
 
@@ -16,7 +20,7 @@ public class DataFlowWithAccessesExecutorTest {
     private DataFlowExecutor executor = new SimpleDataFlowExecutor(new InstantiatingDataBuilderFactory(dataBuilderMetadataManager));
     private DataFlow dataFlow = new DataFlow();
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         dataFlow = new DataFlowBuilder()
                 .withAnnotatedDataBuilder(TestBuilderAccesses.class)
@@ -35,9 +39,9 @@ public class DataFlowWithAccessesExecutorTest {
             assertFalse(response.getResponses().isEmpty());
             assertTrue(response.getResponses().containsKey("X"));
             if (response.getResponses().get("X") instanceof TestDataX) {
-                assertTrue(((TestDataX) response.getResponses().get("X")).getValue().equals("FALSE"));
+                assertEquals("FALSE", ((TestDataX) response.getResponses().get("X")).getValue());
             } else {
-                assertTrue("X not instance of TestDataX", false);
+                Assertions.fail("X not instance of TestDataX");
             }
         }
     }
@@ -53,9 +57,9 @@ public class DataFlowWithAccessesExecutorTest {
             assertFalse(response.getResponses().isEmpty());
             assertTrue(response.getResponses().containsKey("X"));
             if (response.getResponses().get("X") instanceof TestDataX) {
-                assertTrue(((TestDataX) response.getResponses().get("X")).getValue().equals("TRUE"));
+                assertEquals("TRUE", ((TestDataX) response.getResponses().get("X")).getValue());
             } else {
-                assertTrue("X not instance of TestDataX", false);
+                Assertions.fail("X not instance of TestDataX");
             }
         }
     }

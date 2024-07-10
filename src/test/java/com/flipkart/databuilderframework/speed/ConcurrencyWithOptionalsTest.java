@@ -6,9 +6,9 @@ import com.flipkart.databuilderframework.model.*;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Executors;
 
@@ -22,7 +22,7 @@ public class ConcurrencyWithOptionalsTest {
                                                 new InstantiatingDataBuilderFactory(dataBuilderMetadataManager));
     private ExecutionGraphGenerator executionGraphGenerator = new ExecutionGraphGenerator(dataBuilderMetadataManager);
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         dataBuilderMetadataManager.registerWithOptionals(ImmutableSet.of("REQ"),ImmutableSet.of("ADD_REQ"), "A", "BuilderA", ServiceCallerA.class );
         dataBuilderMetadataManager.registerWithOptionals(ImmutableSet.of("REQ"),ImmutableSet.of("ADD_REQ"),  "B", "BuilderB", ServiceCallerB.class );
@@ -52,7 +52,7 @@ public class ConcurrencyWithOptionalsTest {
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
             mTime += (System.currentTimeMillis() - startTime);
 //            System.out.println(response.getResponses().keySet());
-//            Assert.assertEquals(5, response.getResponses().size());
+//            Assertions.assertEquals(5, response.getResponses().size());
             //System.out.println("MT:" + System.currentTimeMillis());
         }
         long sTime = 0;
@@ -65,7 +65,7 @@ public class ConcurrencyWithOptionalsTest {
             DataExecutionResponse response = simpleExecutor.run(dataFlowInstance, dataDelta);
             sTime += (System.currentTimeMillis() - startTime);
 //            System.out.println(response.getResponses().keySet());
-//            Assert.assertEquals(5, response.getResponses().size());
+//            Assertions.assertEquals(5, response.getResponses().size());
             //System.out.println("ST:" + System.currentTimeMillis());
         }
         log.info("MT: {} ST: {}", mTime, sTime);

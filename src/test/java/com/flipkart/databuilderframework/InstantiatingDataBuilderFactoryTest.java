@@ -1,18 +1,19 @@
 package com.flipkart.databuilderframework;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import com.flipkart.databuilderframework.engine.*;
 import com.flipkart.databuilderframework.engine.impl.InstantiatingDataBuilderFactory;
 import com.flipkart.databuilderframework.model.Data;
 import com.flipkart.databuilderframework.model.DataBuilderMeta;
 import com.flipkart.databuilderframework.model.ExecutionGraph;
 import com.google.common.collect.ImmutableSet;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.Collections;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.fail;
 
 public class InstantiatingDataBuilderFactoryTest {
     public static class WrongBuilder extends DataBuilder {
@@ -30,7 +31,7 @@ public class InstantiatingDataBuilderFactoryTest {
     private ExecutionGraphGenerator executionGraphGenerator = new ExecutionGraphGenerator(dataBuilderMetadataManager);
     private DataBuilderFactory dataBuilderFactory = new InstantiatingDataBuilderFactory(dataBuilderMetadataManager);
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         dataBuilderMetadataManager.register(ImmutableSet.of("A", "B"), "C", "BuilderA", TestBuilderA.class);
         dataBuilderMetadataManager.register(ImmutableSet.of("A", "B"), "C", "BuilderB", null);
@@ -41,7 +42,7 @@ public class InstantiatingDataBuilderFactoryTest {
     @Test
     public void testCreate() throws Exception {
         try {
-            Assert.assertNotNull(dataBuilderFactory.create(
+            Assertions.assertNotNull(dataBuilderFactory.create(
                     DataBuilderMeta.builder()
                             .name("BuilderA")
                             .consumes(Collections.emptySet())
@@ -55,7 +56,7 @@ public class InstantiatingDataBuilderFactoryTest {
                 return;
             }
         }
-        fail();
+        Assertions.fail();
      }
 
     @Test
@@ -71,6 +72,6 @@ public class InstantiatingDataBuilderFactoryTest {
                 return;
             }
         }
-        fail();
+        Assertions.fail();
     }
 }

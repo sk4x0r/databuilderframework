@@ -13,14 +13,14 @@ import com.flipkart.databuilderframework.model.*;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Slf4j
 public class FlowTest {
@@ -66,21 +66,21 @@ public class FlowTest {
                     new CAID(), new CR(), new OP()));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
             log.info(listPrint(response.getResponses().keySet()));
-            Assert.assertEquals(3, response.getResponses().size());
+            assertEquals(3, response.getResponses().size());
         }
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(
                     new SPO()));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
             log.info(listPrint(response.getResponses().keySet()));
-            Assert.assertEquals(2, response.getResponses().size());
+            assertEquals(2, response.getResponses().size());
         }
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(
                     new EPD()));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
             log.info(listPrint(response.getResponses().keySet()));
-            Assert.assertEquals(5, response.getResponses().size());
+            assertEquals(5, response.getResponses().size());
         }
     }
 
@@ -105,7 +105,7 @@ public class FlowTest {
                     new CAID(), new CR(), new OP(), new SPO(), new EPD()));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
             log.info(listPrint(response.getResponses().keySet()));
-            Assert.assertEquals(10, response.getResponses().size());
+            assertEquals(10, response.getResponses().size());
         }
     }
 

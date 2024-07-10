@@ -34,16 +34,16 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class ExecutionGraphGeneratorTest {
     private DataBuilderMetadataManager dataBuilderMetadataManager = new DataBuilderMetadataManager();
 
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         dataBuilderMetadataManager.register(BuilderA1.class);
         dataBuilderMetadataManager.register(BuilderA2.class);

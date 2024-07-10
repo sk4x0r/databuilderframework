@@ -8,9 +8,9 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class DataFlowWithTransientDataTest {
@@ -21,7 +21,7 @@ public class DataFlowWithTransientDataTest {
     private DataFlow dataFlow = new DataFlow();
     private DataFlow dataFlowError = new DataFlow();
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         dataBuilderMetadataManager
                 .register(ImmutableSet.of("A", "B"), "C", "BuilderA", TestBuilderA.class )
@@ -45,25 +45,25 @@ public class DataFlowWithTransientDataTest {
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataA("Hello")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertTrue(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().isEmpty());
         }
         Data dataC = null;
         {
             DataDelta dataDelta = new DataDelta(Lists.<Data>newArrayList(new TestDataB("World")));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("C"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("C"));
             DataSetAccessor accessor = new DataSetAccessor(dataFlowInstance.getDataSet());
-            Assert.assertTrue(accessor.checkForData(ImmutableSet.of("A", "B")));
-            Assert.assertFalse(accessor.checkForData("C"));
+            Assertions.assertTrue(accessor.checkForData(ImmutableSet.of("A", "B")));
+            Assertions.assertFalse(accessor.checkForData("C"));
             dataC = response.getResponses().get("C");
         }
         {
             DataDelta dataDelta = new DataDelta(Lists.newArrayList(new TestDataD("this"), dataC));
             DataExecutionResponse response = executor.run(dataFlowInstance, dataDelta);
-            Assert.assertFalse(response.getResponses().isEmpty());
-            Assert.assertTrue(response.getResponses().containsKey("E"));
-            Assert.assertTrue(response.getResponses().containsKey("F"));
+            Assertions.assertFalse(response.getResponses().isEmpty());
+            Assertions.assertTrue(response.getResponses().containsKey("E"));
+            Assertions.assertTrue(response.getResponses().containsKey("F"));
         }
     }
 }
